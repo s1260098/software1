@@ -2,24 +2,26 @@ import java.io.*;
 import java.util.*;
 
 
-class task2_1generator {
+class task4_gene {
     static final int maxClient = 10000;
     static final int maxProduct = 20;
     static final int maxLength = 10;
     static final int maxPrint = 10;
     int idx = 0;
     String str = "";
-    String alpha= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String alpha = "abcdefghijklmnopqrstuvwxyz";
     String productName[] = new String[maxProduct];
     Random rand = new Random();
-
-    task2_1generator() {
+    //ArrayList<String> alphalist = new ArrayList<>();
+    String alphalist[] = new String[26 * 26];
+    task4_gene() {
         Arrays.fill(productName, "");
     }
 
     public void resetProduct() {
         Arrays.fill(productName, "");
     }
+
     public void generateInput() throws IOException {
         File newfile = new File("./inputFile/inputMax.txt");
         BufferedWriter bw = null;
@@ -27,21 +29,23 @@ class task2_1generator {
         bw = new BufferedWriter(new FileWriter(newfile));
         bw.write(String.valueOf(maxClient)); //input 10000
         bw.newLine();
+        initArray();
         for (int i = 0; i < maxClient; i++) { //generate Index
             bw.write(String.valueOf(maxProduct));
-            while (idx < 20) {
+            while (idx < maxProduct) {
                 generateString();
             }
             idx = 0;
+           // System.out.println(productName[1]);
             for (int k = 0; k < productName.length; k++)
-                bw.write(" " + productName[k]);
-            resetProduct();
+                bw.write("  " + productName[k]);
+            productName = new String[maxProduct];
             bw.newLine();
         }
         bw.write("10");bw.newLine();//print phase
         for (int i = 0; i < maxPrint; i++) {
-            int a = rand.nextInt(10000) + 1;
-            int b = rand.nextInt(a + 1000000) + 1;
+            int a = rand.nextInt(100) + 1;
+            int b = rand.nextInt(a + 100) + 1;
             bw.write(String.valueOf(a) + " " + String.valueOf(b));
             bw.newLine();
         }
@@ -55,22 +59,45 @@ class task2_1generator {
 
     public void generateString()
     {
-        StringBuilder sb = new StringBuilder();
+        int index = (int) (rand.nextFloat() * alphalist.length);
+       // System.out.println(index);
 
-        while (sb.length() < maxLength) { // length of the random string.
-            int index = (int) (rand.nextFloat() * alpha.length());
-            sb.append(alpha.charAt(index));
-        }
-        if (Arrays.asList(productName).contains(sb.toString()))
+        if (Arrays.asList(productName).contains(alphalist[index]))
             return;
-        productName[idx++] = sb.toString();
+        productName[idx++] = alphalist[index];
+
+    }
+
+
+    public void initArray()
+    {
+        String a = "";
+        String b = "";
+        int c = 0;
+
+        for (int i = 0; i < alpha.length(); i++) {
+            for (int j = 0; j < alpha.length(); j++) {
+
+                a = String.valueOf(alpha.charAt(i)) + String.valueOf(alpha.charAt(j));
+                for (int k = 0; k < 5; k++) {
+                    b += a;
+                }
+                alphalist[c++] = b;
+                b = "";
+            }
+        }
+        int count = 0;
+        // for (int i = 0; i < 10; i++)
+        //     //count++;
+        //      System.out.println(alphalist[i]);
+
     }
 
 
     public static void main(final String args[]) {
-        task2_1generator gene = new task2_1generator();
-        try{
-        gene.generateInput();
+        task4_gene gene = new task4_gene();
+        try {
+            gene.generateInput();
         }
         catch (Exception e) {
             e.printStackTrace();

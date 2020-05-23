@@ -104,7 +104,7 @@ public class task4 {
     }
 
     public void combination(String in[]) {
-        int i, j, idx, count = 0;
+        int i, j, idx;
         int n = top;
         String name[] = new String[2];
        
@@ -112,38 +112,23 @@ public class task4 {
             for (j = i + 1; j < n; j++) {
                 name[0] = in[i];
                 name[1] = in[j];
-                count++;
                 Arrays.sort(name);//2つの文字列をソート;
                 if ((idx = binarySearch(0, cmbArray.size() - 1, name[0], name[1])) >= 0) {
                     cmbArray.get(idx).incCount();
-                    System.out.println("find the same idx :" + idx);
                 } else {
                     cmbArray.add(new MyClass(1, name[0], name[1]));
-                    System.out.println(
-                            "--------------------\nadd the last index: key1: " + name[0] + ". key2: " + name[1]);
                 }
                 Collections.sort(cmbArray, new MyComp());
-                System.out.println("size of ArrayList : " + cmbArray.size());
-                System.out.println("");
-
             }
         }
-        System.out.println("Number of Combination : " + count);
-        //System.out.println("Size of arraay : " + cmbArray.size());
     }
 
     public int binarySearch(int left, int right, String key1, String key2) {
         int flag1 = 0, flag2 = 0, mid;
-        for (int i = 0; i < cmbArray.size(); i++)
-            System.out.println(i+": "+cmbArray.get(i).getName1() + " : " + cmbArray.get(i).getName2());
-        System.out.println("----BinarySearch----\n1: " + key1 + " | 2: " + key2);
         while (right >= left) {
             mid = (right + left) / 2; // 区間の真ん中
-            System.out.println("left: " + left + "  ||  mid: " + mid + "  ||  right: " + right);
-
             flag1 = cmbArray.get(mid).getName1().compareTo(key1);
             flag2 = cmbArray.get(mid).getName2().compareTo(key2);
-            System.out.println("flag1 = " + flag1 + " : flag2 = " + flag2);
             if (flag1 == 0) {
                 if (flag2 == 0) {
                     return mid;
