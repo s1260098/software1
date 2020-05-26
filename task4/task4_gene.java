@@ -5,11 +5,11 @@ import java.util.*;
 class task4_gene {
     static final int maxClient = 10000;
     static final int maxProduct = 20;
-    static final int maxLength = 10;
+    static final int maxLength = 5;
     static final int maxPrint = 10;
     int idx = 0;
     String str = "";
-    String alpha = "abcdefghijklmnopqrstuvwxyz";
+    String alpha = "abcdefghij";//"klmnopqrstuvwxyz";
     String productName[] = new String[maxProduct];
     Random rand = new Random();
     //ArrayList<String> alphalist = new ArrayList<>();
@@ -23,7 +23,7 @@ class task4_gene {
     }
 
     public void generateInput() throws IOException {
-        File newfile = new File("./inputFile/inputMax.txt");
+        File newfile = new File("./inputMax.txt");
         BufferedWriter bw = null;
         newfile.createNewFile(); //generate inputfile
         bw = new BufferedWriter(new FileWriter(newfile));
@@ -44,8 +44,8 @@ class task4_gene {
         }
         bw.write("10");bw.newLine();//print phase
         for (int i = 0; i < maxPrint; i++) {
-            int a = rand.nextInt(100) + 1;
-            int b = rand.nextInt(a + 100) + 1;
+            int a = rand.nextInt(10) + 1;
+            int b = rand.nextInt(a + 10) + 1;
             bw.write(String.valueOf(a) + " " + String.valueOf(b));
             bw.newLine();
         }
@@ -86,11 +86,6 @@ class task4_gene {
                 b = "";
             }
         }
-        int count = 0;
-        // for (int i = 0; i < 10; i++)
-        //     //count++;
-        //      System.out.println(alphalist[i]);
-
     }
 
 

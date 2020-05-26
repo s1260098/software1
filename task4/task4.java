@@ -95,7 +95,7 @@ public class task4 {
             BufferedWriter bw = new BufferedWriter(new FileWriter(time));
             bw.write("start Time : " + String.valueOf(start_Time)+"\n");
             bw.write("end Time : " + String.valueOf(end_Time)+"\n");
-            bw.write("Elapsed Time : " + String.valueOf(end_Time - start_Time)+"ms.\n");
+            bw.write("Elapsed Time : " + String.valueOf((end_Time - start_Time)/1000.0)+"s.\n");
             bw.close();
         }
         catch (IOException e) {
