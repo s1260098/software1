@@ -2,59 +2,58 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
-
-
-public class task3{
-        public static void main( String[] args) throws Exception {
+public class task3 {
+    public static void main(String[] args) throws Exception {
         new task3();
     }
 
-    static  int INF = Integer.MAX_VALUE; // INF値
+    static int INF = Integer.MAX_VALUE; // INF値
     // ４方向探索用
-    static  int[] dx = { 0, 1, 0, -1 };
-    static  int[] dy = { -1, 0, 1, 0 };
-    static  String d[] = { "W", "N", "E", "S" };
-    static  char[] dir = { 'u', 'r', 'd', 'l' };
+    static int[] dx = { 0, 1, 0, -1 };
+    static int[] dy = { -1, 0, 1, 0 };
+    static String d[] = { "W", "N", "E", "S" };
+    static char[] dir = { 'u', 'r', 'd', 'l' };
 
     String path = ""; // 移動経路(戻値用)
 
     // マンハッタン距離を求める
-    static int getManhattanDistance( int x1,  int y1,  int x2,  int y2) {
+    static int getManhattanDistance(int x1, int y1, int x2, int y2) {
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
+
     public task3() {
-         Scanner sc = new Scanner(System.in);
-         int n = sc.nextInt();
-         int m = sc.nextInt();
-         int linen = sc.nextInt();
-         String prod[][] = new String[n][m];
-         String prod2[][] = new String[n][m];
-         String dirProd[][] = new String[n][m];
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int linen = sc.nextInt();
+        String prod[][] = new String[n][m];
+        String prod2[][] = new String[n][m];
+        String dirProd[][] = new String[n][m];
         sc.nextLine();
         String[] inLine = new String[4];
         for (int i = 0; i < linen; i++) {
             inLine = sc.nextLine().split(" ");
-             int x = Integer.parseInt(inLine[0]);
-             int y = Integer.parseInt(inLine[1]);
+            int x = Integer.parseInt(inLine[0]);
+            int y = Integer.parseInt(inLine[1]);
             prod[y][x] = prod2[y][x] = inLine[2];
             dirProd[y][x] = inLine[3];
         }
-         int loopn = sc.nextInt();
+        int loopn = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < loopn; i++) {
             inLine = sc.nextLine().split(" ");
             setFloor(prod, dirProd);
-             int ans = astar(n, m, prod, inLine[1], dirProd);
+            int ans = astar(n, m, prod, inLine[1], dirProd);
             System.out.println(ans);
         }
     }
 
     // A*(A-star)探索アルゴリズム
-    int astar( int n,  int m,  String[][] in,  String prod,  String dirProd[][]) {
-         String maze[][] = new String[m][n];
+    int astar(int n, int m, String[][] in, String prod, String dirProd[][]) {
+        String maze[][] = new String[m][n];
         int shortestPath = 0;
-         int[][] grid = new int[n][m]; // 移動コスト(距離)の記録
-        for(int i=0;i<m;i++)
+        int[][] grid = new int[n][m]; // 移動コスト(距離)の記録
+        for (int i = 0; i < m; i++)
             for (int j = 0; j < n; j++) {
                 maze[i][j] = in[i][j];
                 grid[i][j] = 0; // 移動コスト(距離)の記録
@@ -82,8 +81,8 @@ public class task3{
             }
         }
 
-        for (int k = 0; k < 1; k++) {
-            setGoal(mx, my, maze,k);
+        for (int k = 0; k < 2; k++) {
+            setGoal(mx, my, maze, k);
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
                     if (maze[i][j].equals("EN")) {
@@ -101,15 +100,15 @@ public class task3{
                     }
                 }
             }
-            shortestPath +=searchShortest(sx, sy, gx, gy, grid, n, m);
+            shortestPath += searchShortest(sx, sy, gx, gy, grid, n, m);
             resetGrid(grid);
         }
         return shortestPath;
     }
 
-    public int searchShortest( int sx,  int sy,  int gx,  int gy,  int[][] grid,  int n,  int m) {
+    public int searchShortest(int sx, int sy, int gx, int gy, int[][] grid, int n, int m) {
         // A*(A-star) 探索
-         Queue<Position> q = new PriorityQueue<Position>();
+        Queue<Position> q = new PriorityQueue<Position>();
 
         Position p = new Position(sx, sy);
         p.estimate = getManhattanDistance(sx, sy, gx, gy); // 推定値
@@ -145,7 +144,7 @@ public class task3{
         return grid[gy][gx]; // 見つからないときは INF 値になる
     }
 
-    public static void setFloor( String prod[][],  String dir[][]) {
+    public static void setFloor(String prod[][], String dir[][]) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 0 && prod[i][j] == null)
@@ -162,7 +161,7 @@ public class task3{
         }
     }
 
-    public static void setGoal(int i, int j, String maze[][], int flag) {//set start to prod
+    public static void setGoal(int i, int j, String maze[][], int flag) {// set start to prod
         if (flag == 0) {
             maze[0][1] = "EN";
             maze[i][j] = "EX";
@@ -172,7 +171,7 @@ public class task3{
         }
     }
 
-    public static void resetGrid( int grid[][]) {
+    public static void resetGrid(int grid[][]) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 grid[i][j] = 0;
@@ -189,7 +188,7 @@ public class task3{
         String path = ""; // 移動経路(移動方向の記録)
 
         // コンストラクタ
-        public Position( int x,  int y) {
+        public Position(int x, int y) {
             this.x = x;
             this.y = y;
             this.cost = 0;
@@ -197,7 +196,7 @@ public class task3{
 
         // 比較関数
         @Override
-        public int compareTo( Position o) {
+        public int compareTo(Position o) {
             return this.estimate - o.estimate; // 推定値で小さい順
         }
     }
