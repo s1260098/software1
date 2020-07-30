@@ -12,8 +12,7 @@ class task4_gene {
     String alpha = "abcdefghij";//"klmnopqrstuvwxyz";
     String productName[] = new String[maxProduct];
     Random rand = new Random();
-    //ArrayList<String> alphalist = new ArrayList<>();
-    String alphalist[] = new String[26 * 26];
+    String alphalist[] = new String[10 * 10];
     task4_gene() {
         Arrays.fill(productName, "");
     }
@@ -23,7 +22,7 @@ class task4_gene {
     }
 
     public void generateInput() throws IOException {
-        File newfile = new File("./inputMax.txt");
+        File newfile = new File("./inputFile/inputMax.txt");
         BufferedWriter bw = null;
         newfile.createNewFile(); //generate inputfile
         bw = new BufferedWriter(new FileWriter(newfile));
@@ -38,7 +37,7 @@ class task4_gene {
             idx = 0;
            // System.out.println(productName[1]);
             for (int k = 0; k < productName.length; k++)
-                bw.write("  " + productName[k]);
+                bw.write(" " + productName[k]);
             productName = new String[maxProduct];
             bw.newLine();
         }
@@ -60,8 +59,6 @@ class task4_gene {
     public void generateString()
     {
         int index = (int) (rand.nextFloat() * alphalist.length);
-       // System.out.println(index);
-
         if (Arrays.asList(productName).contains(alphalist[index]))
             return;
         productName[idx++] = alphalist[index];
@@ -86,13 +83,14 @@ class task4_gene {
                 b = "";
             }
         }
+        // for(String e:alphalist)
+        //     System.out.println(e);
     }
 
 
     public static void main(final String args[]) {
-        task4_gene gene = new task4_gene();
         try {
-            gene.generateInput();
+            new task4_gene().generateInput();
         }
         catch (Exception e) {
             e.printStackTrace();

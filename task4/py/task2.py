@@ -28,7 +28,6 @@ def get_products(in_lines):
             count.update([' '.join(sorted(pair))])
 
     sorted_count = [(v[0], v[1]) for v in sorted(count.items(), key=lambda kv: (-kv[1], kv[0]))]
-            
     return sorted_count
 
 
