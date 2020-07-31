@@ -6,8 +6,8 @@ import java.io.*;
 public class ex_task4 {
     // String product[] = new String[20];
     private int top = 0;
-    ArrayList<MyClass> cmbArray = new ArrayList<>();
-    HashSet<MyClass> cmb = new HashSet<>();
+    ArrayList<ComboInfo> cmbArray = new ArrayList<>();
+    HashSet<ComboInfo> cmb = new HashSet<>();
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 
@@ -73,7 +73,7 @@ public class ex_task4 {
                 if ((idx = binarySearch(0, cmbArray.size() - 1, name[0], name[1])) >= 0) {
                     cmbArray.get(idx).incCount();
                 } else {
-                    cmbArray.add(new MyClass(1, name[0], name[1]));
+                    cmbArray.add(new ComboInfo(1, name[0], name[1]));
                 }
                 Collections.sort(cmbArray, new MyComp());
             }
