@@ -107,11 +107,11 @@ public class task3 {
     }
 
     public int searchShortest(int sx, int sy, int gx, int gy, int[][] grid, int n, int m) {
-        // A*(A-star) 探索
+        // A*(A-star) Search
         Queue<Position> q = new PriorityQueue<Position>();
 
         Position p = new Position(sx, sy);
-        p.estimate = getManhattanDistance(sx, sy, gx, gy); // 推定値
+        p.estimate = getManhattanDistance(sx, sy, gx, gy); // Estimated value
         q.add(p);
 
         while (!q.isEmpty()) {
@@ -119,29 +119,29 @@ public class task3 {
             if (p.cost > grid[p.y][p.x]) {
                 continue;
             }
-            if (p.y == gy && p.x == gx) { // ゴールに到達
-                path = p.path; // 移動経路(戻値用)
+            if (p.y == gy && p.x == gx) { // Reach the goal
+                path = p.path; // the route
                 break;
             }
 
             for (int i = 0; i < dx.length; i++) {
                 int nx = p.x + dx[i];
                 int ny = p.y + dy[i];
-                if (nx < 0 || m <= nx || ny < 0 || n <= ny) { // 範囲外
+                if (nx < 0 || m <= nx || ny < 0 || n <= ny) { //out of range
                     continue;
                 }
                 if (grid[ny][nx] > grid[p.y][p.x] + 1) {
                     grid[ny][nx] = grid[p.y][p.x] + 1;
 
                     Position p2 = new Position(nx, ny);
-                    p2.cost = grid[ny][nx]; // 移動コスト(スタートからの移動量)
-                    p2.estimate = getManhattanDistance(nx, ny, gx, gy) + p2.cost; // 推定値
-                    p2.path = p.path + dir[i]; // 移動経路(移動方向の記録)
+                    p2.cost = grid[ny][nx]; // cost(Distance from start)
+                    p2.estimate = getManhattanDistance(nx, ny, gx, gy) + p2.cost; // Estimated value
+                    p2.path = p.path + dir[i]; //the route
                     q.add(p2);
                 }
             }
         }
-        return grid[gy][gx]; // 見つからないときは INF 値になる
+        return grid[gy][gx]; // if can not find ,return value become INF.
     }
 
     public static void setFloor(String prod[][], String dir[][]) {
